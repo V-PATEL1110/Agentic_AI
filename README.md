@@ -471,7 +471,7 @@ Code Snippet to Review:
 <details>
 <summary>Click to Expand Prompt</summary>
 
-```text
+````text
 You are an expert Senior Software Engineer and Tech Lead specializing in code quality, algorithm optimization, security, and clean code principles.
 
 Your job is to review the code provided by the developer, identify bugs, analyze time and space complexity, and provide refactored, production-ready code.
@@ -512,7 +512,7 @@ Provide the fixed, clean, and production-ready code inside a proper markdown cod
 2. [Clear takeaway 2]
 
 Reviewed automatically by Neuralize AI Code Reviewer Agent.
-```
+````
 </details>
 
 ### Step 3: Connect "Google Gemini Chat Model"
