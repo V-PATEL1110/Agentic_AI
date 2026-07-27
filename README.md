@@ -415,3 +415,169 @@ You can save this HTML file and convert it to a clean, text-selectable PDF for t
 ```
 </details>
 
+---
+
+# 🐍 Agent 3: AI Code Reviewer & Bug Hunter Agent
+
+An automated n8n workflow that receives code snippets via a web form, evaluates them using Google Gemini for bugs, security vulnerabilities, and $O(n)$ time/space complexity issues, and sends a refactored code report directly to the developer's email.
+
+---
+
+## 🏗️ Workflow Architecture
+
+<details>
+<summary>Click to Expand / View Code</summary>
+
+```text
+[n8n Form Trigger] ──► [AI Agent Node] ──► [Gmail Node]
+                           ▲
+                           │ (Chat Model)
+               [Google Gemini Chat Model]
+```
+
+</details>
+
+---
+
+## 🚀 Setup & Installation Steps
+
+### Step 1: Configure "n8n Form Trigger" Node
+1. Add the **n8n Form Trigger** node to your canvas.
+2. Set **Form Title**: `🐍 AI Code Reviewer & Bug Hunter`
+3. Set **Form Description**: `Paste your code snippet below to get instant bug detection, complexity analysis, and clean refactored code.`
+4. Click **+ Add Form Element** 3 times:
+   - **Element 1 (Language)**: Label = `Programming Language` | Type = `Text Input` | Custom Field Name = `language`
+   - **Element 2 (Code Snippet)**: Label = `Paste Your Code Here` | Type = `Text Area` | Custom Field Name = `code`
+   - **Element 3 (Email)**: Label = `Your Email Address` | Type = `Email` | Custom Field Name = `email`
+
+### Step 2: Configure "AI Agent" Node
+1. Connect **n8n Form Trigger** ➔ **AI Agent**.
+2. In the **Prompt / Text** box (User Prompt), paste:
+
+<details>
+<summary>Click to Expand Prompt</summary>
+
+```text
+Language: {{ $json.language }}
+
+Code Snippet to Review:
+{{ $json.code }}
+```
+</details>
+
+3. Scroll to **Options** at the bottom ➔ Click **+ Add Option**:
+   - Select **System Prompt** and paste this exact system prompt:
+
+<details>
+<summary>Click to Expand Prompt</summary>
+
+```text
+You are an expert Senior Software Engineer and Tech Lead specializing in code quality, algorithm optimization, security, and clean code principles.
+
+Your job is to review the code provided by the developer, identify bugs, analyze time and space complexity, and provide refactored, production-ready code.
+
+Format your review strictly using clean Markdown as follows:
+
+# 🛠️ AI Code Review & Security Analysis
+
+### 🎯 Summary & Health Rating
+* **Language:** [Specified Language]
+* **Code Health Score:** [Score]/100
+* **Status:** [e.g., 🔴 Critical Bugs Found / 🟡 Refactoring Suggested / 🟢 Production Ready]
+
+---
+
+### 🐛 Identified Bugs & Security Issues
+* **[Bug 1 Title]:** Explanation of why it fails or crashes.
+* **[Bug 2 Title]:** Explanation of bad practice or edge-case failure.
+
+---
+
+### ⚡ Performance & Complexity Analysis
+* **Time Complexity:** O(...) - [Brief explanation]
+* **Space Complexity:** O(...) - [Brief explanation]
+* **Optimization Potential:** [How memory/speed can be improved]
+
+---
+
+### 💡 Refactored & Optimized Code
+Provide the fixed, clean, and production-ready code inside a proper markdown code block:
+
+```[language]
+// Refactored code goes here
+```
+
+### 📝 Key Takeaways & Best Practices
+1. [Clear takeaway 1]
+2. [Clear takeaway 2]
+
+Reviewed automatically by Neuralize AI Code Reviewer Agent.
+```
+</details>
+
+### Step 3: Connect "Google Gemini Chat Model"
+1. Click the **Chat Model** port on the bottom of the AI Agent node.
+2. Select **Google Gemini Chat Model**.
+3. Choose your credential and select `gemini-3.1-flash-lite`.
+
+### Step 4: Configure "Gmail Node"
+1. Connect **AI Agent** ➔ **Gmail Node**.
+2. Configure settings:
+   - **Resource**: `Message`
+   - **Operation**: `Send`
+   - **To**: Switch to Expression mode (`fx`) and set to:
+<details>
+<summary>Click to Expand / View Code</summary>
+
+```text
+{{ $('n8n Form Trigger').item.json.email }}
+```
+</details>
+
+   - **Subject**: `Your AI Code Review & Security Report - Neuralize AI`
+   - **Message**:
+<details>
+<summary>Click to Expand / View Code</summary>
+
+```text
+{{ $json.output }}
+```
+</details>
+
+---
+
+## 🐍 Sample Buggy Python Code (For Testing)
+
+Paste this code snippet into your form to test the agent:
+
+<details>
+<summary>🐍 Sample Buggy Python Code (For Testing)</summary>
+
+```python
+def process_user_data(user_list=[]):  # Mutable default argument
+    results = {}
+    
+    # Intended: Find duplicate IDs and calculate average score
+    for i in range(len(user_list)):
+        for j in range(len(user_list)): # O(n^2) nested loop bug
+            if user_list[i]['id'] == user_list[j]['id']:
+                print("Found duplicate: " + user_list[i]['id']) # TypeError if id is int
+                
+        # UnboundLocalError: total_score used before declaration
+        total_score = total_score + user_list[i]['score'] 
+        
+    avg = total_score / len(user_list) # ZeroDivisionError if list is empty
+    return avg
+
+# Test run
+users = [
+    {"id": 101, "name": "Arjun", "score": 85},
+    {"id": 102, "name": "Priya", "score": 92},
+    {"id": 101, "name": "Arjun", "score": 85}
+]
+
+print(process_user_data(users))
+```
+</details>
+
+
