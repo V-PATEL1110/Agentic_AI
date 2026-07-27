@@ -544,7 +544,14 @@ Reviewed automatically by Neuralize AI Code Reviewer Agent.
 ```
 </details>
 
+### Step 5: Test the Workflow & Publish
+1. Click the yellow **Execute workflow** button at the bottom of the n8n canvas to test the complete run.
+2. Open the Form Trigger Test URL, fill in your details, select a language, and paste the sample buggy Python code.
+3. Verify that the developer receives the structured AI Code Review & Security Report in their email inbox!
+4. Switch the top-right toggle from **Inactive** to **Active / Published** so it runs automatically in the background.
+
 ---
+
 
 ## 🐍 Sample Buggy Python Code (For Testing)
 
