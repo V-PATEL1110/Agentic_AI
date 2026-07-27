@@ -220,3 +220,198 @@ Neuralize AI Support Team
 2. Click the yellow **Execute workflow** button at the bottom of the n8n canvas to test the complete run.
 3. Check the second email account to verify the Neuralize AI reply arrived!
 4. Switch the top-right toggle from **Inactive** to **Active / Published** so it replies automatically in the background.
+
+---
+
+# 📄 Agent 2: AI Resume Analyzer & ATS Agent
+
+An automated n8n workflow that receives candidate resume PDFs via a web form, processes the document directly using Google Gemini's multimodal capabilities, and sends a detailed ATS score and evaluation report to the candidate's email.
+
+---
+
+## 🏗️ Workflow Architecture
+
+<details>
+<summary>Click to Expand / View Code</summary>
+
+```text
+[n8n Form Trigger] ──► [AI Agent Node] ──► [Gmail Node]
+                           ▲
+                           │ (Chat Model)
+               [Google Gemini Chat Model]
+```
+
+</details>
+
+---
+
+## 🚀 Setup & Installation Steps
+
+### Step 1: Configure the "n8n Form Trigger" Node
+1. Add the **n8n Form Trigger** node to your canvas.
+2. Set **Form Title**: `AI Resume Analyzer`
+3. Set **Form Description**: `Upload your PDF resume to receive a real-time ATS score and detailed feedback.`
+4. Add 3 Form Elements:
+   - **Element 1 (Name)**: Label = `Your Name` | Type = `Text Input` | Custom Field Name = `name`
+   - **Element 2 (Email)**: Label = `Your Email Address` | Type = `Email` | Custom Field Name = `email`
+   - **Element 3 (Resume File)**: Label = `Upload Resume (PDF)` | Type = `File` | Custom Field Name = `resume`
+
+### Step 2: Configure the "AI Agent" Node
+1. Connect **n8n Form Trigger** ➔ **AI Agent**.
+2. Set **Prompt / Text (User Prompt)**:
+
+<details>
+<summary>Click to Expand Prompt</summary>
+
+```text
+Please analyze the attached candidate resume document.
+```
+</details>
+
+3. Scroll down to **Options** ➔ Click **Add Option**:
+   - Select **Automatically Passthrough Binary PDFs** and toggle it **ON**.
+4. Click **Add Option** ➔ Select **System Prompt**, then paste:
+
+<details>
+<summary>Click to Expand Prompt</summary>
+
+```text
+You are an expert AI Resume Reviewer and Applicant Tracking System (ATS) Evaluator named Neuralize AI.
+
+Your task is to analyze the candidate's resume PDF provided to you and generate a clear, professional, and actionable evaluation report.
+
+Format your output using clean Markdown as follows:
+
+# 📄 ATS Resume Evaluation Report
+
+### Candidate Overview
+* **Candidate Name:** [Extract from resume or say "Not Specified"]
+* **Target Role Level:** Entry-Level / Software Engineering Intern
+
+---
+
+### 📊 Overall ATS Score
+**[Score]/100** 
+
+---
+
+### Key Strengths
+* [Strength 1]
+* [Strength 2]
+* [Strength 3]
+
+---
+
+### Areas for Improvement & Missing Keywords
+* [Improvement 1]
+* [Improvement 2]
+* [Missing critical technical skill/keyword 3]
+
+---
+
+### Actionable Recommendations
+1. [Clear step to improve formatting or content]
+2. [Project or skill enhancement suggestion]
+
+---
+*Evaluated automatically by Neuralize AI Resume Agent.*
+```
+</details>
+
+### Step 3: Connect "Google Gemini Chat Model"
+1. Connect **Google Gemini Chat Model** to the **Chat Model** port on the AI Agent node.
+2. Select your Gemini API Key credential.
+3. Set **Model** to `gemini-3.1-flash-lite`.
+
+### Step 4: Configure the "Gmail" Node
+1. Connect **AI Agent** ➔ **Gmail Node**.
+2. Settings:
+   - **Resource**: `Message`
+   - **Operation**: `Send`
+   - **To**: Switch to Expression mode (`fx`) and set:
+<details>
+<summary>Click to Expand / View Code</summary>
+
+```text
+{{ $('n8n Form Trigger').item.json.email }}
+```
+</details>
+
+   - **Subject**: `Your AI Resume Analysis & ATS Score Report - Neuralize AI`
+   - **Message**:
+<details>
+<summary>Click to Expand / View Code</summary>
+
+```text
+{{ $json.output }}
+```
+</details>
+
+### Step 5: Test the Workflow
+1. Click **Execute workflow**.
+2. Open the Form Trigger Test URL, fill in your details, and upload a sample resume PDF.
+3. Verify that the candidate receives the structured ATS score report in their email inbox.
+4. Toggle the workflow to **Active / Published**.
+
+---
+
+## 📄 HTML Template for Resume Test PDF
+
+You can save this HTML file and convert it to a clean, text-selectable PDF for testing ATS evaluation workflows:
+
+<details>
+<summary>📄 HTML Template for Resume Test PDF</summary>
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 15mm; }
+  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #2b2b2b; line-height: 1.4; font-size: 9.5pt; }
+  .header { text-align: center; border-bottom: 2px solid #1a365d; padding-bottom: 8px; margin-bottom: 12px; }
+  .name { font-size: 18pt; font-weight: bold; color: #1a365d; text-transform: uppercase; }
+  .contact-info { font-size: 9pt; color: #4a5568; }
+  .section { margin-bottom: 12px; }
+  .section-title { font-size: 11pt; font-weight: bold; color: #1a365d; text-transform: uppercase; border-bottom: 1px solid #cbd5e0; padding-bottom: 3px; margin-bottom: 6px; }
+  ul { margin: 3px 0 0 0; padding-left: 16px; }
+  li { margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="name">Arjun Sharma</div>
+    <div class="contact-info">
+      Vadodara, Gujarat, India | +91 98765 43210 | arjun.sharma@email.com<br>
+      https://linkedin.com/in/arjun-sharma | https://github.com/arjun-sharma
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Professional Summary</div>
+    <p>Driven 2nd-year Computer Science student with expertise in Data Structures, Relational Databases, Python, and AI automation workflows.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <ul>
+      <li><strong>Languages:</strong> Python, JavaScript, SQL, C++</li>
+      <li><strong>Frameworks & Tools:</strong> React.js, Node.js, n8n Automation, Google Gemini API, Git</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Projects</div>
+    <p><strong>AI Resume Analyzer & ATS Agent</strong> (n8n, Python, Gemini API)</p>
+    <ul>
+      <li>Automated PDF parsing and real-time evaluation using Gemini LLM and Gmail API.</li>
+    </ul>
+  </div>
+
+</body>
+</html>
+```
+</details>
+
