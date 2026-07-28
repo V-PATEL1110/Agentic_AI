@@ -602,4 +602,84 @@ print(process_user_data(users))
 ```
 </details>
 
+---
+
+# ⚙️ Steps to Install Community Version of n8n
+
+### Step 1: Install Node.js
+
+#### Why do we need it?
+n8n runs on Node.js, so it must be installed first.
+
+#### Installation
+* Visit [https://nodejs.org](https://nodejs.org)
+* Download the LTS (Long Term Support) version.
+* Run the installer.
+* Keep all options as default.
+* Click **Next** until installation finishes.
+* Restart your computer (recommended).
+
+#### Verify Installation
+1. Open Command Prompt:
+   - Press `Windows + R`
+   - Type `cmd` and press Enter
+2. Run:
+```cmd
+node -v
+```
+You should see something similar to:
+```text
+v22.x.x
+```
+3. Now check `npm`:
+```cmd
+npm -v
+```
+Output:
+```text
+10.x.x
+```
+✅ **Node.js is installed successfully if both commands work.**
+
+---
+
+### Step 2: Install n8n Community Edition
+
+1. Open Command Prompt.
+2. Run:
+```cmd
+npm install -g n8n
+```
+*(This may take a few minutes.)*
+
+3. After installation finishes, verify it:
+```cmd
+n8n --version
+```
+Example output:
+```text
+1.xx.x
+```
+✅ **n8n is installed.**
+
+---
+
+### Step 3: Start n8n
+
+1. Run:
+```cmd
+n8n
+```
+The terminal will show:
+```text
+Editor is now accessible via:
+http://localhost:5678
+```
+2. Leave this terminal open.
+3. Open Chrome.
+4. Visit [http://localhost:5678](http://localhost:5678)
+
+🎉 **Congratulations! Your local n8n server is running.**
+
+
 
