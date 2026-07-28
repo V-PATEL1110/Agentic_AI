@@ -606,6 +606,9 @@ print(process_user_data(users))
 
 # ⚙️ Steps to Install Community Version of n8n
 
+> [!NOTE]
+> **Future Reference / Workshop Note:** For workshops, participants were instructed to sign up for the **n8n Cloud version** (`n8n.cloud`) only. The local community edition installation steps below are provided for local development and self-hosted testing.
+
 ### Step 1: Install Node.js
 
 #### Why do we need it?
