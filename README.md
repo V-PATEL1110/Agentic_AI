@@ -20,81 +20,101 @@ An automated n8n workflow that monitors unread emails, analyzes customer inquiri
 
 ---
 
-## 🔑 Prerequisite: Google OAuth 2.0 Setup Guide
+## 🔑 Prerequisites
 
 <details>
-<summary>🔑 Prerequisite: Google OAuth 2.0 Setup Guide</summary>
+<summary>🔑 Prerequisite 1: Obtain Google Gemini API Key</summary>
+
+### Creating Your Google Gemini API Key
+
+Step 1: Open Google AI Studio
+- Go to: https://aistudio.google.com/
+
+Step 2: Get API Key
+- Click "Get API key" from the left sidebar or top menu.
+
+Step 3: Create API Key in Project
+- Click "Create API key".
+- Choose "Create API key in new project" (or select your existing project).
+
+Step 4: Copy and Save Your API Key
+- Copy the generated API key string.
+- Save it securely in a text file or environment variable (Example: AIzaSyxxxxxxxxxxxxxxxxxxxx).
+- Important Security Note: Do NOT commit your API key directly to GitHub or share it publicly.
+
+Step 5: Use in n8n Workflows
+- This Gemini API Key will be used in each agent whenever you configure and connect the Google Gemini Chat Model node.
+
+</details>
+
+<details>
+<summary>🔑 Prerequisite 2: Google OAuth 2.0 Setup Guide</summary>
 
 ### Creating Google OAuth Client ID & Client Secret
 
-#### Step 1: Open Google Cloud Console
-Go to: [https://console.cloud.google.com/](https://console.cloud.google.com/)
+Step 1: Open Google Cloud Console
+- Go to: https://console.cloud.google.com/
 
-#### Step 2: Create a New Project
+Step 2: Create a New Project
 1. Click the Project Selector at the top.
-2. Click **New Project**.
-3. Enter a project name (e.g., `Neuralize Gmail Agent`).
-4. Click **Create**.
+2. Click New Project.
+3. Enter a project name (Example: Neuralize Gmail Agent).
+4. Click Create.
 5. Select the newly created project.
 
-#### Step 3: Enable Gmail API
+Step 3: Enable Gmail API
 1. Open the left sidebar.
-2. Go to: **APIs & Services** ➔ **Library**.
-3. Search for **Gmail API**.
-4. Open **Gmail API** and click **Enable**.
+2. Go to: APIs & Services ➔ Library.
+3. Search for Gmail API.
+4. Open Gmail API and click Enable.
 
-#### Step 4: Configure OAuth Consent Screen
-1. Go to: **APIs & Services** ➔ **OAuth consent screen**.
-2. Click **Get Started**.
+Step 4: Configure OAuth Consent Screen
+1. Go to: APIs & Services ➔ OAuth consent screen.
+2. Click Get Started.
 3. Fill in the details:
-   - **App Name**: `Neuralize AI Agent`
-   - **User Support Email**: Select your Gmail account.
-   - **Developer Contact Email**: Select your Gmail account.
-4. Click **Next** until completed.
+   - App Name: Neuralize AI Agent
+   - User Support Email: Select your Gmail account.
+   - Developer Contact Email: Select your Gmail account.
+4. Click Next until completed.
 
-#### Step 5: Add Test Users
-1. Go to **Audience** ➔ Choose **External**.
-2. Go to **Test Users** ➔ Click **Add Users**.
-3. Add the Gmail account that will be used in n8n (e.g., `yourname@gmail.com`).
-4. Click **Save**.
+Step 5: Add Test Users
+1. Go to Audience ➔ Choose External.
+2. Go to Test Users ➔ Click Add Users.
+3. Add the Gmail account that will be used in n8n (Example: yourname@gmail.com).
+4. Click Save.
 
-#### Step 6: Configure Data Access
-1. Go to **Data Access** ➔ Click **Add or Remove Scopes**.
+Step 6: Configure Data Access
+1. Go to Data Access ➔ Click Add or Remove Scopes.
 2. Search and add these scopes:
-   - `Gmail API` ➔ `.../auth/gmail.modify`
-   - `Gmail API` ➔ `.../auth/gmail.send`
-   *(These allow the workflow to read emails and send replies.)*
-3. Click **Update**, then click **Save**.
+   - Gmail API ➔ .../auth/gmail.modify
+   - Gmail API ➔ .../auth/gmail.send
+3. Click Update, then click Save.
 
-#### Step 7: Create OAuth Client
-1. Go to: **APIs & Services** ➔ **Credentials**.
-2. Click **+ Create Credentials** ➔ Choose **OAuth Client ID**.
+Step 7: Create OAuth Client
+1. Go to: APIs & Services ➔ Credentials.
+2. Click + Create Credentials ➔ Choose OAuth Client ID.
 
-#### Step 8: Select Application Type
-Choose **Web application**.
+Step 8: Select Application Type
+- Choose Web application.
 
-#### Step 9: Give It a Name
-Example: `n8n Gmail OAuth`
+Step 9: Give It a Name
+- Example: n8n Gmail OAuth
 
-#### Step 10: Add Authorized Redirect URI
+Step 10: Add Authorized Redirect URI
 1. Copy the Redirect URL shown by n8n in the Gmail credential window.
-   - Example: `https://your-n8n-instance/rest/oauth2-credential/callback`
-   - Or for n8n Cloud: `https://xxxxx.app.n8n.cloud/rest/oauth2-credential/callback`
-2. Paste it under **Authorized Redirect URIs**.
-3. Click **Create**.
+   - Example: https://your-n8n-instance/rest/oauth2-credential/callback
+   - Or for n8n Cloud: https://xxxxx.app.n8n.cloud/rest/oauth2-credential/callback
+2. Paste it under Authorized Redirect URIs.
+3. Click Create.
 
-#### Step 11: Copy Credentials
-Google will display:
-- **Client ID**
-- **Client Secret**
+Step 11: Copy Credentials
+- Google will display Client ID and Client Secret. Copy both credentials.
 
-Copy both credentials.
-
-#### Step 12: Connect in n8n
+Step 12: Connect in n8n
 1. In n8n, open the Gmail Credential window.
-2. Paste the **Client ID** and **Client Secret**.
-3. Click **Sign in with Google**.
-4. Choose your Gmail account and click **Allow**.
+2. Paste the Client ID and Client Secret.
+3. Click Sign in with Google.
+4. Choose your Gmail account and click Allow.
 
 </details>
 
