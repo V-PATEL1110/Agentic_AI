@@ -203,24 +203,19 @@ Neuralize AI Support Team
 6. Close the Gemini node panel.
 
 ### Step 5: Configure the Gmail Tool Node
-Search for the Gmail tool node in n8n and add it to your canvas.
+1. Search for the **Gmail** tool node in n8n and add it to your canvas.
+2. Connect its **Tool** port to the **Tool** port of the **AI Agent** node.
+3. Configure all node parameters as follows:
+   - **Credential**: Select your connected Gmail OAuth Credential
+   - **Tool Description**: Set Automatically
+   - **Resource**: Message
+   - **Operation**: Reply
+   - **Message ID**: `{{ $json.id }}`
+   - **Email Type**: Text
+   - **Message**: Defined automatically by the model
+   - **Options**: Click **Add option** ➔ select **Reply to Sender Only** and set it to **True / Enabled**.
 
-Under actions/operations, select Reply to a message in Gmail.
-
-Connect its Tool port to the Tool port of the AI Agent node.
-
-Set Message ID to:
-
-```text
-{{ $('Gmail Trigger').item.json.id }}
-```
-
-Under Options, click Add Option ➔ select Reply to Sender Only and set it to True.
-
-### Step 6: Configure Email Message Type
-Inside the Reply to a message in Gmail tool node settings, set Email Type to Text (Keep email type text).
-
-### Step 7: Test Manually & Publish
+### Step 6: Test Manually & Publish
 1. Send a test email to your Gmail address from a second email account.
 2. Click the yellow **Execute workflow** button at the bottom of the n8n canvas to test the complete run.
 3. Check the second email account to verify the Neuralize AI reply arrived!
