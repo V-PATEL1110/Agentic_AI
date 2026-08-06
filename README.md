@@ -126,22 +126,15 @@ An automated n8n workflow that monitors unread emails, analyzes customer inquiri
 1. Click on **Workflows** in the left sidebar menu.
 2. Click the **Create Workflow** button (or `+` icon) at the top right to start with a blank canvas.
 
-### Step 2: Add, Test, and Configure the Gmail Trigger
-1. Click the **Add first step** button on the blank canvas.
-2. Search for **Gmail Trigger** and select it.
-3. Select your connected Gmail account under **Credential to connect with**.
-4. Set **Event** to `Message Received`.
-5. Under **Filters**, click **Add Filter** ➔ select **Search**, and type:
-<details>
-<summary>Click to Expand / View Code</summary>
-
-```text
-is:unread -from:me
-```
-</details>
-
-6. **Crucial Step**: Click the yellow **Test step** button at the top right of the panel (make sure you have at least one email in your inbox). *(Running this once loads the input schema so `id`, `From`, `Subject`, and `snippet` show up in the left panel for drag-and-drop).*
-7. Close the Gmail Trigger panel.
+### Step 2: Configure the Gmail Trigger
+1. Add the **Gmail Trigger** node to your canvas.
+2. Set **Event**: `Message Received`.
+3. Set **Poll Times**: `Every Minute`.
+4. Set **Max Emails Per Poll**: `1`.
+5. Under **Filters ➔ Search**, enter:
+   ```text
+   is:unread -from:me
+   ```
 
 ### Step 3: Add the AI Agent Node (Set System & User Prompts)
 1. Hover over the Gmail Trigger node on the canvas and click the small `+` icon on its right side.
@@ -209,33 +202,25 @@ Neuralize AI Support Team
 5. Choose your preferred model (e.g., `gemini-3.1-flash-lite`).
 6. Close the Gemini node panel.
 
-### Step 5: Connect and Drag-and-Drop Configure the Gmail Tool
-1. On the canvas, find the bottom-right connector port on the AI Agent node labeled **Tool**.
-2. Click and drag out a line from **Tool** onto the canvas.
-3. Search for **Gmail** and select the Gmail tool node.
-4. In the settings:
-   - **Credential**: Select your Gmail account.
-   - **Resource**: Select `Message`.
-   - **Operation**: Select `Reply`.
-5. Set the **Message ID**:
-   - Clear out any existing text in the Message ID box.
-   - Look at the left **INPUT** panel (populated from Step 2).
-   - Click and drag the top `id` field straight into the Message ID box so it displays:
-<details>
-<summary>Click to Expand / View Code</summary>
+### Step 5: Configure the Gmail Tool Node
+Search for the Gmail tool node in n8n and add it to your canvas.
+
+Under actions/operations, select Reply to a message in Gmail.
+
+Connect its Tool port to the Tool port of the AI Agent node.
+
+Set Message ID to:
 
 ```text
-{{ $json.id }}
+{{ $('Gmail Trigger').item.json.id }}
 ```
-</details>
 
-6. Set **Message**: Keep it set to `Defined automatically by the model`.
-7. Prevent cross-replying:
-   - Scroll to **Options** at the bottom, click **Add option**, and select **Reply to Sender Only**.
-   - Toggle it to **True / Enabled**.
-8. Close the Gmail Tool panel.
+Under Options, click Add Option ➔ select Reply to Sender Only and set it to True.
 
-### Step 6: Test Manually & Publish
+### Step 6: Configure Email Message Type
+Inside the Reply to a message in Gmail tool node settings, set Email Type to Text (Keep email type text).
+
+### Step 7: Test Manually & Publish
 1. Send a test email to your Gmail address from a second email account.
 2. Click the yellow **Execute workflow** button at the bottom of the n8n canvas to test the complete run.
 3. Check the second email account to verify the Neuralize AI reply arrived!
