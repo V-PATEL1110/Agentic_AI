@@ -327,7 +327,7 @@ Format your output strictly as follows:
 <summary>Click to Expand / View Code</summary>
 
 ```text
-{{ $('n8n Form Trigger').item.json.email }}
+{{ $json.output }}
 ```
 </details>
 
@@ -520,7 +520,7 @@ Provide the completely fixed, clean, and commented code inside a standard code b
 <summary>Click to Expand / View Code</summary>
 
 ```text
-{{ $('n8n Form Trigger').item.json.email }}
+{{ $json.output }}
 ```
 </details>
 
