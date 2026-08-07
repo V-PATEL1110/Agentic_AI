@@ -349,65 +349,13 @@ Format your output strictly as follows:
 
 ---
 
-## 📄 HTML Template for Resume Test PDF
+## 📄 Sample Resume PDF for Testing
 
-You can save this HTML file and convert it to a clean, text-selectable PDF for testing ATS evaluation workflows:
+Students can directly download and use the pre-built sample resume PDF for testing the ATS evaluation workflow:
 
-<details>
-<summary>📄 HTML Template for Resume Test PDF</summary>
+- 📄 **Sample Resume File**: [Download Arjun_Sharma_Resume.pdf](./Arjun_Sharma_Resume.pdf)
 
-```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<style>
-  @page { size: A4; margin: 15mm; }
-  body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #2b2b2b; line-height: 1.4; font-size: 9.5pt; }
-  .header { text-align: center; border-bottom: 2px solid #1a365d; padding-bottom: 8px; margin-bottom: 12px; }
-  .name { font-size: 18pt; font-weight: bold; color: #1a365d; text-transform: uppercase; }
-  .contact-info { font-size: 9pt; color: #4a5568; }
-  .section { margin-bottom: 12px; }
-  .section-title { font-size: 11pt; font-weight: bold; color: #1a365d; text-transform: uppercase; border-bottom: 1px solid #cbd5e0; padding-bottom: 3px; margin-bottom: 6px; }
-  ul { margin: 3px 0 0 0; padding-left: 16px; }
-  li { margin-bottom: 3px; }
-</style>
-</head>
-<body>
-
-  <div class="header">
-    <div class="name">Arjun Sharma</div>
-    <div class="contact-info">
-      Vadodara, Gujarat, India | +91 98765 43210 | arjun.sharma@email.com<br>
-      https://linkedin.com/in/arjun-sharma | https://github.com/arjun-sharma
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Professional Summary</div>
-    <p>Driven 2nd-year Computer Science student with expertise in Data Structures, Relational Databases, Python, and AI automation workflows.</p>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Technical Skills</div>
-    <ul>
-      <li><strong>Languages:</strong> Python, JavaScript, SQL, C++</li>
-      <li><strong>Frameworks & Tools:</strong> React.js, Node.js, n8n Automation, Google Gemini API, Git</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <div class="section-title">Projects</div>
-    <p><strong>AI Resume Analyzer & ATS Agent</strong> (n8n, Python, Gemini API)</p>
-    <ul>
-      <li>Automated PDF parsing and real-time evaluation using Gemini LLM and Gmail API.</li>
-    </ul>
-  </div>
-
-</body>
-</html>
-```
-</details>
+> **Note:** Download and upload this PDF file into the **n8n Form Trigger** test URL to test the AI Resume Analyzer & ATS Agent.
 
 ---
 
