@@ -353,7 +353,7 @@ Format your output strictly as follows:
 
 Students can directly download and use the pre-built sample resume PDF for testing the ATS evaluation workflow:
 
-- 📄 **Sample Resume File**: [Download Arjun_Sharma_Resume.pdf](./Arjun_Sharma_Resume.pdf)
+- 📄 **Sample Resume File**: [Download Sample Resume (PDF)](./Arjun_Sharma_Resume.pdf)
 
 > **Note:** Download and upload this PDF file into the **n8n Form Trigger** test URL to test the AI Resume Analyzer & ATS Agent.
 
